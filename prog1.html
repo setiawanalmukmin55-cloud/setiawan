@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WannElectro - Belajar Komponen Elektronika</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e293b;
+            --accent: #f59e0b;
+            --light: #f8fafc;
+            --dark: #0f172a;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            margin: 0;
+            background-color: var(--light);
+            color: var(--secondary);
+            line-height: 1.6;
+        }
+
+        header {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+            border-bottom: 5px solid var(--primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h2 {
+            color: var(--primary);
+            border-left: 5px solid var(--accent);
+            padding-left: 10px;
+            margin-top: 40px;
+        }
+
+        /* Card Komponen */
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+
+        .card h3 { color: var(--dark); margin-top: 0; }
+
+        /* Kalkulator Resistor */
+        .calculator-box {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .resistor-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #e2e8f0;
+            height: 100px;
+            border-radius: 50px;
+            margin: 20px auto;
+            width: 80%;
+            position: relative;
+        }
+
+        .band {
+            width: 15px;
+            height: 100%;
+            margin: 0 10px;
+            transition: all 0.3s;
+        }
+
+        .select-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .result-display {
+            background: var(--dark);
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        button:hover { background: #1d4ed8; }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>WannElectro ⚡</h1>
+    <p>Pusat Pengetahuan & Kalkulator Praktis Elektronika</p>
+</header>
+
+<div class="container">
+    
+    <section>
+        <h2>Pengetahuan Komponen</h2>
+        <div class="component-grid">
+            <div class="card">
+                <h3>1. Resistor</h3>
+                <p>Komponen pasif yang berfungsi menghambat arus listrik. Berguna untuk membagi tegangan dan membatasi arus agar komponen lain (seperti LED) tidak terbakar.</p>
+                <strong>Satuan: Ohm (Ω)</strong>
+            </div>
+            <div class="card">
+                <h3>2. Kapasitor</h3>
+                <p>Menyimpan muatan listrik sementara. Sering digunakan sebagai filter pada power supply atau perata tegangan.</p>
+                <strong>Satuan: Farad (F)</strong>
+            </div>
+            <div class="card">
+                <h3>3. Dioda</h3>
+                <p>Komponen semikonduktor yang mengizinkan arus mengalir ke satu arah saja. Seperti katup pada pipa air.</p>
+                <strong>Fungsi: Penyearah arus (AC ke DC)</strong>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Kalkulator Resistor (4 Gelang)</h2>
+        <div class="calculator-box">
+            <div class="resistor-visual">
+                <div id="vband1" class="band" style="background: brown;"></div>
+                <div id="vband2" class="band" style="background: black;"></div>
+                <div id="vband3" class="band" style="background: red;"></div>
+                <div style="width: 40px;"></div>
+                <div id="vband4" class="band" style="background: gold;"></div>
+            </div>
+
+            <div class="select-group">
+                <div>
+                    <label>Gelang 1 (Digit 1)</label>
+                    <select id="band1" onchange="calculateResistor()">
+                        <option value="0">Hitam (0)</option>
+                        <option value="1" selected>Cokelat (1)</option>
+                        <option value="2">Merah (2)</option>
+                        <option value="3">Oranye (3)</option>
+                        <option value="4">Kuning (4)</option>
+                        <option value="5">Hijau (5)</option>
+                        <option value="6">Biru (6)</option>
+                        <option value="7">Ungu (7)</option>
+                        <option value="8">Abu-abu (8)</option>
+                        <option value="9">Putih (9)</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Gelang 2 (Digit 2)</label>
+                    <select id="band2" onchange="calculateResistor()">
+                        <option value="0" selected>Hitam (0)</option>
+                        <option value="1">Cokelat (1)</option>
+                        <option value="2">Merah (2)</option>
+                        <option value="3">Oranye (3)</option>
+                        <option value="4">Kuning (4)</option>
+                        <option value="5">Hijau (5)</option>
+                        <option value="6">Biru (6)</option>
+                        <option value="7">Ungu (7)</option>
+                        <option value="8">Abu-abu (8)</option>
+                        <option value="9">Putih (9)</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Gelang 3 (Pengali)</label>
+                    <select id="band3" onchange="calculateResistor()">
+                        <option value="1">Hitam (x1)</option>
+                        <option value="10">Cokelat (x10)</option>
+                        <option value="100" selected>Merah (x100)</option>
+                        <option value="1000">Oranye (x1k)</option>
+                        <option value="10000">Kuning (x10k)</option>
+                        <option value="100000">Hijau (x100k)</option>
+                        <option value="1000000">Biru (x1M)</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Gelang 4 (Toleransi)</label>
+                    <select id="band4" onchange="calculateResistor()">
+                        <option value="1">Cokelat (1%)</option>
+                        <option value="2">Merah (2%)</option>
+                        <option value="5" selected>Emas (5%)</option>
+                        <option value="10">Perak (10%)</option>
+                    </select>
+                </div>
+            </div>
+            <div id="resistor-result" class="result-display">1000 Ω ± 5%</div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Kalkulator Hukum Ohm</h2>
+        <div class="calculator-box">
+            <p>Kosongkan satu nilai yang ingin dicari (V, I, atau R).</p>
+            <div class="select-group">
+                <input type="number" id="volt" placeholder="Tegangan (V) - Volt">
+                <input type="number" id="ampere" placeholder="Arus (I) - Ampere">
+                <input type="number" id="ohm" placeholder="Hambatan (R) - Ohm">
+            </div>
+            <button onclick="calculateOhm()">HITUNG NILAI</button>
+            <div id="ohm-result" class="result-display" style="margin-top: 20px; display: none;"></div>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    <p>&copy; 2026 WikiElectro - Belajar Seru Dunia Arus Lemah</p>
+</footer>
+
+<script>
+    // Fungsi Mapping Warna untuk Visual
+    const colorMap = {
+        "0": "black", "1": "brown", "2": "red", "3": "orange",
+        "4": "yellow", "5": "green", "6": "blue", "7": "violet",
+        "8": "gray", "9": "white"
+    };
+    const tolMap = { "1": "brown", "2": "red", "5": "gold", "10": "silver" };
+
+    function calculateResistor() {
+        const b1 = document.getElementById('band1').value;
+        const b2 = document.getElementById('band2').value;
+        const b3 = document.getElementById('band3').value;
+        const b4 = document.getElementById('band4').value;
+
+        // Update Visual
+        document.getElementById('vband1').style.background = colorMap[b1];
+        document.getElementById('vband2').style.background = colorMap[b2];
+        document.getElementById('vband3').style.background = colorMap[Math.log10(b3) || 0];
+        document.getElementById('vband4').style.background = tolMap[b4];
+
+        // Hitung
+        let val = ( (parseInt(b1) * 10) + parseInt(b2) ) * parseInt(b3);
+        let output = val >= 1000 ? (val/1000) + " kΩ" : val + " Ω";
+        document.getElementById('resistor-result').innerText = output + " ± " + b4 + "%";
+    }
+
+    function calculateOhm() {
+        let v = document.getElementById('volt').value;
+        let i = document.getElementById('ampere').value;
+        let r = document.getElementById('ohm').value;
+        let res = document.getElementById('ohm-result');
+        res.style.display = "block";
+
+        if (v === "" && i !== "" && r !== "") {
+            res.innerText = "Hasil: V = " + (i * r) + " Volt";
+        } else if (i === "" && v !== "" && r !== "") {
+            res.innerText = "Hasil: I = " + (v / r).toFixed(3) + " Ampere";
+        } else if (r === "" && v !== "" && i !== "") {
+            res.innerText = "Hasil: R = " + (v / i).toFixed(2) + " Ohm";
+        } else {
+            res.innerText = "Mohon isi 2 nilai saja!";
+        }
+    }
+</script>
+
+</body>
+</html>
